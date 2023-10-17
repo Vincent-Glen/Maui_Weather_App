@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="The_Weather_App.MainPage"
+             BackgroundColor="White"
+             xmlns:local="clr-namespace:The_Weather_App">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelstyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="Text" Value="Gray" />
+            </Style>
+            <Style x:Key="labelResultstyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="Margin" Value="10, 0, 0, 0" />
+            </Style>
+            <local:LongtoDateTimeConverter x:Key="longtoDateTimeConverter" />
+            <local:FahrenheitToCelcius x:Key="fahrenheitToCelcius" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Aspect="Fill" HeightRequest="300"
+               Source="background.jpg" VerticalOptions="StartAndExpand" />
+        <StackLayout Margin="20,50"
+                     HorizontalOptions="Start"
+                     Orientation="Vertical"
+                     Spacing="20"
+                     VerticalOptions="Start">
+
+            <Label FontSize="16" 
+                   Text="{Binding Title}" 
+                   TextColor="White" 
+                   VerticalOptions="Center" />
+        </StackLayout>
+        <StackLayout Margin="0,20" HorizontalOptions="Center" Orientation="Vertical" VerticalOptions="Center">
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Image HeightRequest="50" Source="cloudy.png" VerticalOptions="Center" WidthRequest="50" />
+                <Label FontAttributes="Bold" FontSize="70" Text="12" TextColor="White" VerticalOptions="Center" />
+                <Label FontSize="34"
+                   Text="{Binding Main.Temperature, Converter={StaticResource fahrenheitToCelcius}}"
+                   TextColor="White" VerticalOptions="Center" />
+            </StackLayout>
+            <Label FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="White"
+                   Text="{Binding Weather[0].Description}"/>
+            <Label FontSize="16"
+                   HorizontalOptions="Center"
+                   Text="October 17th, 4:15pm"
+                   TextColor="White" />
+        </StackLayout>
+        <Frame Grid.Row="1" Margin="20, -40,20,0" Padding="0" CornerRadius="10"
+               HasShadow="True">
+
+            <Grid Margin="0,15,0,0"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="CenterAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Column="0"
+                             HorizontalOptions="CenterAndExpand"                             
+                             Spacing="10"
+                             VerticalOptions="Start">
+                    <Image Source="humidity.png" Scale="0.8" HorizontalOptions="Center"/>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="{Binding Main.Humidity}"
+                               TextColor="DarkBlue"/>
+
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="Humidity"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Grid.Column="1"
+                             HorizontalOptions="CenterAndExpand"                             
+                             Spacing="10"
+                             VerticalOptions="Start">
+                    <Image Source="wind.png" Scale="0.8" HorizontalOptions="Center"/>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="{Binding Wind.Speed}"
+                               TextColor="DarkBlue"/>
+
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="Wind"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Grid.Column="2"
+                             HorizontalOptions="CenterAndExpand"                             
+                             Spacing="10"
+                             VerticalOptions="Start">
+                    <Image Source="pressure.png" Scale="0.8" HorizontalOptions="Center"/>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="{Binding Main.Pressure}"
+                               TextColor="DarkBlue"/>
+
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="Pressure"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Grid.Column="3"
+                             HorizontalOptions="CenterAndExpand"                             
+                             Spacing="10"
+                             VerticalOptions="Start">
+                    <Image Source="cloudyday.png" Scale="0.8" HorizontalOptions="Center"/>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="{Binding Clouds.All}"
+                               TextColor="DarkBlue"/>
+
+                        <Label FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               Text="Cloudiness"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </Frame>
+        <StackLayout Grid.Row="2" Margin="20,40,0,60" Orientation="Vertical" Spacing="20">
+            <StackLayout Orientation="Horizontal" Spacing="40">
+                <Label FontAttributes="Bold"
+                           FontSize="Small"
+                           Text="Time of Sunrise"
+                           TextColor="Black"
+                           VerticalOptions="Center"/>
+                <Label
+                    FontSize="15"
+                    Text="{Binding Sys.Sunrise, Converter={StaticResource longtoDateTimeConverter}}"
+                    TextColor="Black"   
+                    VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Spacing="40">
+                <Label FontAttributes="Bold"
+                           FontSize="Small"
+                           Text="Time of Sunset"
+                           TextColor="Black"
+                           VerticalOptions="Center"/>
+                <Label
+                    FontSize="15"
+                    Text="{Binding Sys.Sunset , Converter={StaticResource longtoDateTimeConverter}}"
+                    TextColor="Black"   
+                    VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Grid.Row="3" Margin="0,40,0,0" Orientation="Horizontal">
+                <Entry x:Name="_cityEntry"
+                       Margin="5,0"
+                       BackgroundColor="CadetBlue" 
+                       CharacterSpacing="7"
+                       HorizontalTextAlignment="Center"
+                       Text="{Binding Title}"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       WidthRequest="250"/>
+                <Button BackgroundColor="CadetBlue" 
+                        BorderColor="White"
+                        BorderWidth="-1"
+                        Clicked="OnGetWeatherButtonClicked"
+                        Text="Get Weather"
+                        TextColor="White"/>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>
